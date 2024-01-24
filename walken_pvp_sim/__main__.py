@@ -16,17 +16,17 @@ def _print_stats(scores):
         f"Score: {min(scores):.2f} - {max(scores):.2f} (median: {statistics.median(scores):.2f})")
 
 
-def sim_score_range(cathlete, myberry_boost):
+def sim_score_range(cathlete, myberry_boost, count):
     sim_score_urban = []
-    for x in range(0, 1000000):
+    for x in range(0, count):
         sim_score_urban.append(compute_battle_score(cathlete, Discipline.URBAN, myberry_boost))
     sim_score_marathon = []
 
-    for x in range(0, 1000000):
+    for x in range(0, count):
         sim_score_marathon.append(compute_battle_score(cathlete, Discipline.MARATHON, myberry_boost))
 
     sim_score_sprint = []
-    for x in range(0, 1000000):
+    for x in range(0, count):
         sim_score_sprint.append(compute_battle_score(cathlete, Discipline.SPRINT, myberry_boost))
 
     print(f"* {Discipline.URBAN.name}")
@@ -86,11 +86,11 @@ def main():
     cathlete_2 = Cathlete(78, 80.4, 75.6)
 
     print(f"---- CATHLETE 1 ---- {cathlete_1}")
-    sim_score_range(cathlete_1, myberry_boost)
+    sim_score_range(cathlete_1, myberry_boost, 330000)
     print("")
 
     print(f"---- CATHLETE 2 ---- {cathlete_2}")
-    sim_score_range(cathlete_2, myberry_boost)
+    sim_score_range(cathlete_2, myberry_boost, 330000)
     print("")
 
     matches_count = 1000000

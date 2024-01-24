@@ -1,3 +1,13 @@
+# Ensure the venv is enabled. This is started in its own interpreter.
+import os
+
+this_dir = os.path.dirname(os.path.realpath(__file__))
+this_project_dir = os.path.join(this_dir, os.pardir)
+activate_this_path = os.path.join(this_project_dir, r'.venv\Scripts\activate_this.py')
+exec(open(activate_this_path).read(),
+     {'__file__': activate_this_path})
+#########################################################################
+
 """(Do not run) This script handle computation from a text file specified as argument.
 """
 import csv
@@ -7,16 +17,15 @@ import sys
 import time
 from ast import literal_eval as make_tuple
 from multiprocessing import Queue
-from random import randint
 
-from walken_pvp_sim.score import Cathlete, Discipline, compute_battle_score
+from walken_pvp_sim.score import Cathlete, Discipline, compute_battle_score, generator
 
 
 def sim_fight(cat1, cat2, boost):
     history_discipline = []
     win_history = []
-    for x in range(0, 10000000):
-        discipline = Discipline(randint(1, 3) - 1)
+    for x in range(0, 1000000):
+        discipline = Discipline(generator.integers(1, 3, endpoint=True) - 1)
         cat1_score = compute_battle_score(cat1, discipline, boost)
         cat2_score = compute_battle_score(cat2, discipline, boost)
         if cat1_score > cat2_score:

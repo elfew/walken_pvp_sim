@@ -34,9 +34,11 @@ while not tasks.empty():
 
     # Start new processes if any slot are available.
     if len(procs_running) < MAX_PROCS_COUNT:
+        print(f"task_scheduler: run new task...")
         procs_running.add(subprocess.Popen(['python.exe', 'task_runner.py', tasks.get()]))
+        print(f"task_scheduler: remaining {tasks.qsize()} tasks.")
     else:
-        sleep(30)
+        sleep(5)
 
 # Ensure all processes has ended
 while len(procs_running) > 0:

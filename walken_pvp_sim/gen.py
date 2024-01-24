@@ -1,28 +1,18 @@
 import itertools
 
 
-def generate_builds():
-    cathletism = 234
+def generate_builds(stat_min, stat_step, stat_max, cathletism):
+    """Generate cathletes builds."""
+    for stat_str, stat_stam in itertools.product(range(stat_min, cathletism + 1, stat_step), repeat=2):
+        stat_spd = cathletism - stat_str - stat_stam
 
-    min_stat = 44
-    max_stat = cathletism - min_stat * 2
-    step = 10
-
-    stat_str_range = list(range(min_stat, max_stat, step))
-    builds = set()
-    for stat_str in stat_str_range:
-        stat_sta_range = list(range(min_stat, cathletism - stat_str - min_stat, step))
-
-        for stat_sta in stat_sta_range:
-            stat_spd = cathletism - stat_str - stat_sta
-            # print(f"{stat_str},{stat_sta},{stat_spd} = {stat_str + stat_sta + stat_spd}")
-            builds.add((stat_str, stat_sta, stat_spd))
-    return builds
+        if (stat_str + stat_stam <= cathletism
+                and stat_str < stat_max
+                and stat_stam < stat_max
+                and stat_min < stat_spd < stat_max):
+            yield stat_str, stat_stam, stat_spd
 
 
-def generate_matchups():
-    cathletes = generate_builds()
-    print(f"Builds: {len(cathletes)}")
-    matchups = set(itertools.product(cathletes, repeat=2))
-    print(f"Matchups: {len(matchups)}")
-    return matchups
+def generate_matchups(builds):
+    """Generate encounters between builds."""
+    return itertools.product(builds, repeat=2)
